@@ -8,14 +8,6 @@ struct EReturnValueInput
     public EReturnValueInput(float fisrtValue, float secondValue) => (FisrtValue, SecondValue) = (fisrtValue, secondValue);
 }
 
-enum EArithmeticOperations
-{
-    Sum = 0,
-    Substract = 1,
-    Multiply = 2,
-    Divide = 3,
-}
-
 namespace SimpleCalculator
 {
     internal static class Program
@@ -24,15 +16,15 @@ namespace SimpleCalculator
         {
             Console.Clear();
             WelcomeMessage();
-            var values = GetValues();
-            var operation = ChosenOperation();
+            ChosenOperation();
         }
 
+        
         private static void WelcomeMessage()
         {
             Console.WriteLine("***** Fun with Calculator *****");
         }
-
+        
         private static EReturnValueInput GetValues()
         {
             Console.Write("Enter the first number: ");
@@ -44,28 +36,76 @@ namespace SimpleCalculator
             return new EReturnValueInput(firstValue, secondValue);
         }
 
-        private static EArithmeticOperations ChosenOperation()
+        private static void ChosenOperation()
         {
-            Console.WriteLine("Enter the operation: ");
-            Console.WriteLine("0 - Sum");
-            Console.WriteLine("1 - Substract");
-            Console.WriteLine("2 - Multiply");
-            Console.WriteLine("3 - Divide");
+            Console.WriteLine("[0] Sum\n[1] Substract\n[2] Multiply\n[3] Division => ");
+            Console.Write("Enter the operation: ");
             var operation = float.Parse(Console.ReadLine());
 
             switch (operation)
             {
                 case 0:
-                    return EArithmeticOperations.Sum;
+                {
+                    Sum();
+                    Console.ReadKey();
+                    break;
+                };
                 case 1:
-                    return EArithmeticOperations.Substract;
-                case 2: 
-                    return EArithmeticOperations.Multiply;
-                case 3: 
-                    return EArithmeticOperations.Divide;
-                default: 
-                    return EArithmeticOperations.Sum;
+                {
+                    Substract();
+                    Console.ReadKey();
+                    break;
+                };
+                case 2:
+                {
+                    Multiply();
+                    Console.ReadKey();
+                    break;   
+                };
+                case 3:
+                {
+                    Division();
+                    Console.ReadKey();
+                    break;
+                };
             }
+        }
+
+        private static void PrintResult(float result)
+        {
+            Console.WriteLine($"The result is: {result}");
+        }
+        
+        private static void Sum()
+        {
+            var values = GetValues();
+            var result = values.FisrtValue + values.SecondValue;
+            Console.Clear();
+            PrintResult(result);
+        }
+
+        private static void Substract()
+        {
+            var values = GetValues();
+            var result = values.FisrtValue - values.SecondValue;
+            Console.Clear();
+            PrintResult(result);
+        }
+
+        private static void Multiply()
+        {
+            var values = GetValues();
+            var result = values.FisrtValue * values.SecondValue;
+            Console.Clear();
+            PrintResult(result);
+        }
+
+        private static void Division()
+        {
+            var values = GetValues();
+            var result = values.FisrtValue / values.SecondValue;
+            Console.Clear();
+            PrintResult(result);
         }
     }    
 }
